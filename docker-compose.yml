@@ -1,0 +1,22 @@
+services:
+  db:
+    image: mysql:8
+    container_name: kakeibo-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: backend_development
+      MYSQL_USER: kakeibo
+      MYSQL_PASSWORD: kakeibo
+      MYSQL_ROOT_PASSWORD: kakeibo_root
+    ports:
+      - "3306:3306"
+    volumes:
+      - kakeibo-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pkakeibo_root"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  kakeibo-db-data:
