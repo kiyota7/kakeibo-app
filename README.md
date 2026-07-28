@@ -15,6 +15,7 @@
 | [非機能要件定義書](docs/非機能要件定義書.md) | 動作環境・性能・ユーザビリティ・セキュリティ |
 | [技術スタック](docs/技術スタック.md) | 使用技術とバージョン |
 | [ローカル開発環境セットアップ](docs/ローカル開発環境セットアップ.md) | 開発環境の構築手順・サーバー起動方法 |
+| [インフラ構成](docs/インフラ構成.md) | AWS上のインフラ構成図・ディレクトリ構成(Terraform管理) |
 
 ## 技術スタック(概要)
 
@@ -30,10 +31,12 @@
 ```
 .
 ├── 要件定義書.md
-├── docs/            # 各種設計ドキュメント
-├── backend/         # Ruby on Rails(APIモード)バックエンド
-├── frontend/        # Next.js(TypeScript)フロントエンド
-└── docker-compose.yml  # ローカルMySQL起動用
+├── docs/                    # 各種設計ドキュメント
+├── backend/                 # Ruby on Rails(APIモード)バックエンド
+├── frontend/                # Next.js(TypeScript)フロントエンド
+├── terraform/               # AWSインフラのコード化(EC2 + RDS)
+├── docker-compose.yml       # ローカルMySQL起動用
+└── docker-compose.prod.yml  # 本番(EC2)でのfrontend/backend起動用
 ```
 
 ## セットアップ・起動方法
@@ -67,7 +70,7 @@ npm run dev
 - [x] 取引(収入/支出)の登録・編集・削除・一覧表示
 - [x] 日付・カテゴリによるフィルタリング
 - [x] 月別集計・カテゴリ別集計
-- [ ] AWS(EC2 + RDS)へのデプロイ
+- [x] AWS(EC2 + RDS)へのデプロイ
 - [ ] 画面録画・スクリーンショットの添付
 
 ## 開発ワークフロー
