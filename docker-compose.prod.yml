@@ -1,0 +1,20 @@
+services:
+  backend:
+    build: ./backend
+    container_name: kakeibo-backend
+    restart: unless-stopped
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: "3306"
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+
+  frontend:
+    build: ./frontend
+    container_name: kakeibo-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend

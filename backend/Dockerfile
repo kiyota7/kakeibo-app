@@ -32,7 +32,7 @@ FROM base AS build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libvips libyaml-dev pkg-config && \
+    apt-get install --no-install-recommends -y build-essential git libvips libyaml-dev libssl-dev pkg-config && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install application gems
@@ -69,6 +69,8 @@ COPY --chown=rails:rails --from=build /rails /rails
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
-# Start server via Thruster by default, this can be overwritten at runtime
-EXPOSE 80
-CMD ["./bin/thrust", "./bin/rails", "server"]
+# APIモード(ビュー・アセットパイプラインなし)のためThrusterは使わず、Pumaを直接起動する
+# (ポートはconfig/puma.rbで3001に設定済み。docker-entrypointのdb:prepare判定に合わせ、
+# 引数は"./bin/rails server"のみにする)。
+EXPOSE 3001
+CMD ["./bin/rails", "server"]
